@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Rakan Mustafa] — Mechanical Engineering Portfolio</title>
+<meta name="description" content="Mechanical engineering portfolio showcasing design, analysis, and fabrication projects.">
+
+<!-- ============================================================
+     HOW TO EDIT THIS SITE
+     - Replace every [BRACKETED PLACEHOLDER] with your own text.
+     - Each project "sheet" has a .media-placeholder div — swap the
+       whole div for an <img> or <video> tag when you have real
+       media. Instructions are in an HTML comment right above it.
+     - Colors/fonts are defined once at the top of the <style> block
+       under :root — change them there and the whole site updates.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ===================== DESIGN TOKENS ===================== */
+  :root{
+    --blueprint:      #14284A;   /* deep blueprint navy — hero / footer */
+    --blueprint-dark:  #0E1E38;  /* darker navy for depth/gradients */
+    --line-cyan:      #9FD6E8;   /* blueprint linework cyan */
+    --line-cyan-dim:  rgba(159,214,232,0.35);
+    --paper:          #ECE9DF;   /* paper background for content sections */
+    --paper-line:     #D8D4C6;   /* hairlines on paper */
+    --sheet:          #F6F4EC;   /* card / "drawing sheet" surface */
+    --ink:            #212420;   /* primary text */
+    --ink-soft:       #5B5F58;   /* secondary text */
+    --safety-orange:  #D6572B;   /* accent — CTAs, callouts */
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'IBM Plex Sans', sans-serif;
+    --font-mono:    'IBM Plex Mono', monospace;
+
+    --max-width: 1120px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  h1,h2,h3{
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--safety-orange);
+  }
+
+  /* ===================== NAV ===================== */
+  header.nav{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(20,40,74,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line-cyan-dim);
+  }
+  .nav-inner{
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-mark{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    color: var(--line-cyan);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+  }
+  .nav-mark svg{ display:block; }
+  .nav-links{
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0; padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+  .nav-links a{
+    color: #DCE6EE;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .nav-links a:hover{ color: var(--line-cyan); border-color: var(--line-cyan); }
+
+  /* ===================== HERO (blueprint) ===================== */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    background:
+      linear-gradient(180deg, var(--blueprint) 0%, var(--blueprint-dark) 100%);
+    color: #F1F5F8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  /* blueprint grid backdrop */
+  .hero::before{
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--line-cyan-dim) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-cyan-dim) 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity: 0.25;
+    mask-image: radial-gradient(ellipse at 50% 40%, black 40%, transparent 85%);
+  }
+  /* corner registration marks */
+  .crop{
+    position: absolute;
+    width: 26px; height: 26px;
+    border: 1.5px solid var(--line-cyan);
+    opacity: 0.8;
+  }
+  .crop.tl{ top: 24px; left: 24px; border-right: none; border-bottom: none; }
+  .crop.tr{ top: 24px; right: 24px; border-left: none; border-bottom: none; }
+  .crop.bl{ bottom: 24px; left: 24px; border-right: none; border-top: none; }
+  .crop.br{ bottom: 24px; right: 24px; border-left: none; border-top: none; }
+
+  .hero-inner{
+    position: relative;
+    z-index: 2;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 140px 28px 100px;
+    width: 100%;
+  }
+  .hero .eyebrow{ color: var(--line-cyan); }
+  .hero h1{
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 1.02;
+    margin: 18px 0 22px;
+    max-width: 14ch;
+  }
+  .hero h1 .accent{ color: var(--safety-orange); }
+  .hero p.lede{
+    font-size: 1.05rem;
+    color: #C7D3DC;
+    max-width: 46ch;
+    margin: 0 0 36px;
+  }
+  .hero .name-line{
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--line-cyan);
+    margin-bottom: 6px;
+  }
+
+  .hero-cta{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--blueprint-dark);
+    background: var(--line-cyan);
+    padding: 13px 22px;
+    border-radius: 2px;
+    transition: transform 0.2s ease, background 0.2s ease;
+    width: fit-content;
+  }
+  .hero-cta:hover{ background: #C7EAF4; transform: translateY(-1px); }
+
+  /* mini title block bottom right of hero, like a real drawing sheet */
+  .titleblock{
+    position: absolute;
+    right: 24px; bottom: 60px;
+    z-index: 2;
+    border: 1px solid var(--line-cyan-dim);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #9FB4C4;
+    display: none;
+  }
+  .titleblock div{
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--line-cyan-dim);
+    white-space: nowrap;
+  }
+  .titleblock div:last-child{ border-bottom: none; }
+  @media (min-width: 900px){ .titleblock{ display: block; } }
+
+  /* ===================== SECTION SHELL ===================== */
+  section{ padding: 96px 0; }
+  .section-head{
+    margin-bottom: 48px;
+  }
+  .section-head h2{
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+    margin-top: 10px;
+  }
+  .section-head .rule{
+    height: 1px;
+    background: var(--paper-line);
+    margin-top: 28px;
+  }
+
+  /* ===================== PROJECT "DRAWING SHEETS" ===================== */
+  .sheets{
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  .sheet{
+    position: relative;
+    background: var(--sheet);
+    border: 1px solid var(--paper-line);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .sheet.in-view{ opacity: 1; transform: translateY(0); }
+
+  .sheet-header{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--paper-line);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .sheet-header .dwg-no{ color: var(--safety-orange); font-weight: 500; }
+
+  .media-placeholder{
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        var(--paper-line) 0px,
+        var(--paper-line) 1px,
+        transparent 1px,
+        transparent 14px
+      ),
+      var(--paper);
+    border-bottom: 1px solid var(--paper-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .media-placeholder .ph-content{
+    text-align: center;
+    font-family: var(--font-mono);
+    color: var(--ink-soft);
+    background: var(--sheet);
+    border: 1px dashed var(--paper-line);
+    padding: 18px 26px;
+  }
+  .media-placeholder .ph-content svg{
+    display: block;
+    margin: 0 auto 10px;
+    opacity: 0.6;
+  }
+  .media-placeholder .ph-label{
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .media-placeholder .ph-sub{
+    font-size: 0.68rem;
+    color: #8A8D84;
+    margin-top: 4px;
+  }
+
+  /* ---- multi-image gallery (used when a project has several figures) ---- */
+  .media-gallery{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--paper-line);
+    border-bottom: 1px solid var(--paper-line);
+  }
+  .media-gallery figure{
+    position: relative;
+    margin: 0;
+    background: var(--sheet);
+    overflow: hidden;
+  }
+  .media-gallery img{
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: contain;
+    background: #FFFFFF;
+  }
+  .media-gallery figcaption{
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: rgba(14,30,56,0.82);
+    color: #F1F5F8;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+  }
+  @media (max-width: 640px){
+    .media-gallery{ grid-template-columns: 1fr; }
+  }
+
+  /* ---- outline "view code" style link inside a sheet body ---- */
+  .code-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--blueprint-dark);
+    border: 1px solid var(--ink-soft);
+    padding: 11px 18px;
+    margin-top: 22px;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .code-link:hover{ background: var(--blueprint-dark); color: #F1F5F8; border-color: var(--blueprint-dark); }
+  .code-link svg{ display: block; }
+  .code-link-note{
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: #9A9D93;
+    margin: 8px 0 0;
+  }
+
+  .sheet-body{ padding: 30px 26px 34px; }
+  .sheet-body h3{
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+  .sheet-body .summary{
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--safety-orange);
+    margin: 0 0 14px;
+  }
+  .sheet-body .description{
+    color: var(--ink-soft);
+    max-width: 68ch;
+    margin: 0 0 22px;
+  }
+
+  .specs{
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--paper-line);
+    border-bottom: 1px solid var(--paper-line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px 24px;
+  }
+  .specs li{
+    font-size: 0.88rem;
+  }
+  .specs li span{
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9A9D93;
+    margin-bottom: 3px;
+  }
+
+  .tags{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags span{
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border: 1px solid var(--paper-line);
+    color: var(--ink-soft);
+  }
+
+  /* ===================== ABOUT / BOM TABLE ===================== */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 800px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  .about-copy p{ color: var(--ink-soft); max-width: 56ch; }
+  .about-copy .avatar-placeholder{
+    width: 96px; height: 96px;
+    border: 1px dashed var(--paper-line);
+    background: repeating-linear-gradient(45deg, var(--paper-line) 0, var(--paper-line) 1px, transparent 1px, transparent 10px), var(--sheet);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  table.bom{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: var(--sheet);
+    border: 1px solid var(--paper-line);
+  }
+  table.bom caption{
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  table.bom th, table.bom td{
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  table.bom th{
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9A9D93;
+    font-weight: 500;
+  }
+  table.bom tr:last-child td{ border-bottom: none; }
+
+  /* ===================== FOOTER / CONTACT (blueprint) ===================== */
+  footer{
+    background: var(--blueprint-dark);
+    color: #C7D3DC;
+    padding: 72px 0 36px;
+    position: relative;
+  }
+  footer .eyebrow{ color: var(--line-cyan); }
+  footer h2{
+    color: #F1F5F8;
+    font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+    margin: 14px 0 18px;
+    max-width: 16ch;
+  }
+  footer p{ max-width: 48ch; color: #A9B7C2; margin-bottom: 30px; }
+
+  .contact-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 56px;
+  }
+  .contact-list a{
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-decoration: none;
+    color: #DCE6EE;
+    border: 1px solid var(--line-cyan-dim);
+    padding: 10px 16px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .contact-list a:hover{ border-color: var(--line-cyan); color: var(--line-cyan); }
+
+  .footer-bottom{
+    border-top: 1px solid rgba(159,214,232,0.15);
+    padding-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #6E828F;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--safety-orange);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="16" height="16" stroke="currentColor" stroke-width="1"/><path d="M1 9H17M9 1V17" stroke="currentColor" stroke-width="1"/></svg>
+      [YOUR NAME]
+    </a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <span class="crop tl"></span>
+    <span class="crop tr"></span>
+    <span class="crop bl"></span>
+    <span class="crop br"></span>
+
+    <div class="hero-inner">
+      <div class="name-line">[Rakan Mustafa] — MECHANICAL ENGINEER</div>
+      <p class="eyebrow">Portfolio — Rev. 01</p>
+      <h1>Design work built to <span class="accent">tolerance</span>, not guesswork.</h1>
+      <p class="lede">[A collection of projects spanning mechanical design, battery engineering using MATLAB, hands-on fabrication, and aerodynamic simulations."]</p>
+      <a href="#projects" class="hero-cta">
+        View Projects
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="currentColor" stroke-width="1.3"/></svg>
+      </a>
+    </div>
+
+    <div class="titleblock">
+      <div>DRAWN BY&nbsp;&nbsp;&nbsp;&nbsp;[Rakan Mustafa]</div>
+      <div>SHEET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 OF 1</div>
+      <div>DATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2026]</div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Selected Work</p>
+        <h2>Projects</h2>
+        <div class="rule"></div>
+      </div>
+
+      <div class="sheets">
+
+        <!-- ---------- PROJECT 1 ---------- -->
+        <article class="sheet">
+          <div class="sheet-header">
+            <span class="dwg-no">DWG NO. 01</span>
+            <span>EV Battery Module 1D Thermal Solver &amp; Cooling System Optimization</span>
+            <span>Scale — NTS</span>
+          </div>
+
+          <!-- 4-figure gallery: Phase 1 (End-Cooled, failure) vs Phase 2 (Bottom-Cooled, fix) -->
+          <div class="media-gallery">
+            <figure>
+              <img src="assets/ev-thermal/phase1-contour.png" alt="Phase 1 End-Cooled thermal gradient contour map showing heat trapped at Cell 1, peaking near 130°C">
+              <figcaption>Phase 1 — End-Cooled — Thermal Gradient Contour</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/ev-thermal/phase2-contour.png" alt="Phase 2 Bottom-Cooled thermal gradient contour map showing uniform temperature across all cells">
+              <figcaption>Phase 2 — Bottom-Cooled — Thermal Gradient Contour</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/ev-thermal/phase1-transient.png" alt="Phase 1 transient temperature response, Cell 1 peaking near 130°C, well above the 45°C degradation limit">
+              <figcaption>Phase 1 — Transient Response (130°C Peak)</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/ev-thermal/phase2-transient.png" alt="Phase 2 transient temperature response, all cells uniform and capped at 32.7°C">
+              <figcaption>Phase 2 — Transient Response (32.7°C Peak)</figcaption>
+            </figure>
+          </div>
+
+          <div class="sheet-body">
+            <h3>EV Battery Thermal Solver</h3>
+            <p class="summary">Built a 1D transient finite-difference solver in MATLAB to optimize lithium-ion battery cooling architecture, reducing peak fast-charging temperatures by 74.8% and eliminating cell-to-cell thermal gradients.</p>
+            <p class="description">To solve severe thermal bottlenecking during aggressive 35A DC fast-charging in a 10-cell 21700 battery module, I built a 1D transient thermal solver in MATLAB using the Explicit Finite Difference Method (Euler Forward Integration). The model accounts for energy conservation, thermal resistance networks, and temperature-dependent internal resistance (R-int). Validation revealed that the initial End-Cooled Architecture (Phase 1) choked heat transfer, causing a catastrophic 130°C meltdown and a 100°C gradient across the module. By re-architecting the system into a Bottom Chill Plate System (Phase 2), every cell was given an independent cooling path—capping peak temperatures at a safe 32.7°C (well under the 45°C limit) and reducing cell-to-cell gradients to 0°C. For future iterations, I plan to expand this model into a 3D CFD analysis to model coolant fluid temperature rise across the flow channels.</p>
+            <ul class="specs">
+              <li><span>Role</span>Thermal Systems Lead (Independent Project)</li>
+              <li><span>Tools</span>MATLAB, Finite Difference Method (FDM), Thermal Resistance Networks</li>
+              <li><span>Timeline</span>Summer 2026</li>
+            </ul>
+            <div class="tags">
+              <span>MATLAB</span><span>Thermal Engineering</span><span>FDM Solver</span><span>BTMS Architecture</span>
+            </div>
+
+            <a href="https://github.com/rmrm-ux/Rakan-Mustafa-Student-Mechanical-Engineering-Portfolio" target="_blank" rel="noopener" class="code-link">
+              View MATLAB Code on GitHub
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="currentColor" stroke-width="1.3"/></svg>
+            </a>
+            <p class="code-link-note">Placeholder link — .m files (Phase 1 &amp; Phase 2) to be uploaded to /matlab/ev-battery-thermal-solver in the repo.</p>
+          </div>
+        </article>
+
+        <!-- ---------- PROJECT 2 ---------- -->
+        <article class="sheet">
+          <div class="sheet-header">
+            <span class="dwg-no">DWG NO. 02</span>
+            <span>Dual-Disc Cycloidal Drive — Mechanical Design &amp; Kinematic Validation</span>
+            <span>Scale — NTS</span>
+          </div>
+
+          <!--
+            No media uploaded yet for this project — see instructions on Project 1
+            for how to swap this placeholder for real images once the physical
+            build / motion-study capture is ready.
+          -->
+          <div class="media-placeholder">
+            <div class="ph-content">
+              <svg width="34" height="34" viewBox="0 0 34 34" fill="none"><rect x="1" y="1" width="32" height="32" rx="1" stroke="#8A8D84" stroke-width="1"/><circle cx="11" cy="12" r="3" stroke="#8A8D84" stroke-width="1"/><path d="M2 26L12 17L19 22L24 16L33 24" stroke="#8A8D84" stroke-width="1"/></svg>
+              <div class="ph-label">Image / Video Placeholder</div>
+              <div class="ph-sub">Assembly render, motion study, and print photos to follow</div>
+            </div>
+          </div>
+
+          <div class="sheet-body">
+            <h3>Dual-Disc Cycloidal Drive</h3>
+            <p class="summary">Designed and modeled a 10:1 speed-reduction cycloidal drive from first principles — parametric CAD profile generation, dual-disc dynamic balancing, and full kinematic validation via SolidWorks Motion Study.</p>
+
+            <p class="description"><strong>Status:</strong> Design complete, kinematics validated in simulation. Physical build (3D-printed prototype) and empirical friction/stress testing in progress — physical validation photos and data to follow.</p>
+
+            <p class="description">The project spans mechanism design, applied mathematics, CAD-driven manufacturing constraints, and mechatronic system integration — combining a mathematically derived disc geometry with a fully constrained, motion-validated assembly before committing to fabrication.</p>
+
+            <h3>Key Engineering Contributions</h3>
+            <p class="description"><strong>Parametric profile generation from governing equations</strong> — rather than relying on freeform or AI-generated spline approximations, the cycloidal disc profile was derived directly from the standard epicycloidal equation and generated as an exact point-table (720 points per revolution), imported into SolidWorks via Curve Through XYZ Points. This ensured a mathematically accurate tooth profile with a defined, defensible design basis — every dimension traces back to four governing parameters: lobe count (N = 10), pin circle radius (Rz = 29.5 mm), eccentricity (e = 1.5 mm), and ring pin radius (rz = 2 mm).</p>
+            <p class="description"><strong>Dual-disc balanced configuration</strong> — to cancel the inherent eccentric imbalance force of a single-disc cycloidal reducer, the design uses two identical disc profiles mounted 180° out of phase on a common eccentric shaft. This required independently deriving and validating a second, rotationally-offset profile and re-establishing correct kinematic mates (gear mates, parallel constraints) between each disc and the output carrier — a non-trivial constraint-resolution problem solved through iterative CAD debugging and interference analysis.</p>
+            <p class="description"><strong>Reduction ratio and drivetrain</strong> — 10 lobes / 11 ring pins yield a 10:1 reduction between the input and disc orbit, with a 1:1 coupling from disc to output pin carrier via oversized output holes (pin diameter + 2× eccentricity clearance), correctly sized to accommodate the disc's orbital path without binding. The system was modeled using SolidWorks Gear Mates to enforce correct relative angular velocity and direction between the input shaft, discs, and output carrier.</p>
+            <p class="description"><strong>Design-for-manufacture considerations</strong> — sourced a standard, off-the-shelf tolerance stack (4 mm ring pins, 5 mm output pins, 20 mm/32 mm 6804-series bearings at the eccentric-to-disc interface) to avoid non-standard or 3D-printed bearing surfaces at rolling-contact interfaces and preserve accurate friction test data. Verified geometry using SolidWorks Interference Detection across full rotation cycles, catching and correcting a false-clipping condition and a genuine shaft/carrier bore interference before committing to print. Selected a NEMA 17 stepper motor with an A4988/DRV8825 driver for Arduino-based closed-loop control and step-accurate input rotation logging, enabling planned instrumented friction and torque testing.</p>
+
+            <h3>Validation</h3>
+            <p class="description">Kinematic behavior — including correct 10:1 reduction, opposite-direction disc rotation relative to the input, and synchronized output carrier motion — was verified using a SolidWorks Motion Study with a constant-speed rotary motor applied to the input shaft, confirming the assembly's gear mates and constraint scheme produce physically correct motion prior to physical fabrication.</p>
+
+            <h3>Next Steps</h3>
+            <ul style="margin:0 0 22px; padding-left:20px; color:var(--ink-soft);">
+              <li style="margin-bottom:6px;">3D-print the full assembly (housing, dual discs, output carrier) at the UMD makerspace</li>
+              <li style="margin-bottom:6px;">Assemble with sourced hardware (bearings, dowel pins, motor, driver)</li>
+              <li style="margin-bottom:6px;">Conduct instrumented friction and stress testing using Arduino-based rotation/torque logging</li>
+              <li>Publish empirical results alongside simulation predictions</li>
+            </ul>
+
+            <ul class="specs">
+              <li><span>Role</span>Mechanism Design Lead (Independent Project)</li>
+              <li><span>Tools</span>SolidWorks (CAD, Motion Study, Interference Detection), Arduino, Applied Kinematics</li>
+              <li><span>Timeline</span>2026 — In Progress</li>
+            </ul>
+            <div class="tags">
+              <span>Mechanism Design</span><span>Applied Kinematics</span><span>Parametric CAD</span><span>SolidWorks Motion Study</span><span>Mechatronics</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ---------- PROJECT 3 ---------- -->
+        <article class="sheet">
+          <div class="sheet-header">
+            <span class="dwg-no">DWG NO. 03</span>
+            <span>[Project 3 Title Placeholder]</span>
+            <span>Scale — NTS</span>
+          </div>
+
+          <!--
+            REPLACE THIS DIV to add real media (see instructions on Project 1)
+          -->
+          <div class="media-placeholder">
+            <div class="ph-content">
+              <svg width="34" height="34" viewBox="0 0 34 34" fill="none"><rect x="1" y="1" width="32" height="32" rx="1" stroke="#8A8D84" stroke-width="1"/><circle cx="11" cy="12" r="3" stroke="#8A8D84" stroke-width="1"/><path d="M2 26L12 17L19 22L24 16L33 24" stroke="#8A8D84" stroke-width="1"/></svg>
+              <div class="ph-label">Image / Video Placeholder</div>
+              <div class="ph-sub">Recommended 1600 × 900px — replace this div, see comment in source</div>
+            </div>
+          </div>
+
+          <div class="sheet-body">
+            <h3>[Project 3 Name]</h3>
+            <p class="summary">[One-line summary of what this project is and its outcome.]</p>
+            <p class="description">[Placeholder paragraph — describe the problem you set out to solve, your design approach, and how you validated it. Mention key decisions, constraints, and what you'd improve next time. Replace with your own write-up.]</p>
+            <ul class="specs">
+              <li><span>Role</span>[Placeholder]</li>
+              <li><span>Tools</span>[Placeholder — e.g. CATIA, LabVIEW]</li>
+              <li><span>Timeline</span>[Placeholder]</li>
+            </ul>
+            <div class="tags">
+              <span>[Tag]</span><span>[Tag]</span><span>[Tag]</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Background</p>
+        <h2>About</h2>
+        <div class="rule"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-copy">
+          <div class="avatar-placeholder">Photo<br>Placeholder</div>
+          <p>[Placeholder bio — a few sentences about your engineering background, what you're studying or where you work, and what kind of problems you enjoy solving. Mention your degree, school/employer, and graduation year if relevant.]</p>
+          <p>[Optional second paragraph — interests, notable coursework, or what you're looking for next, e.g. internships or full-time roles.]</p>
+        </div>
+
+        <table class="bom">
+          <caption>Skills — Bill of Materials</caption>
+          <thead>
+            <tr><th>Category</th><th>Item</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>CAD</td><td>[Placeholder — SolidWorks, Fusion 360]</td></tr>
+            <tr><td>Analysis</td><td>[Placeholder — FEA, ANSYS, MATLAB]</td></tr>
+            <tr><td>Fabrication</td><td>[Placeholder — CNC, 3D printing, welding]</td></tr>
+            <tr><td>Programming</td><td>[Placeholder — Python, Arduino/C++]</td></tr>
+            <tr><td>Other</td><td>[Placeholder]</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER / CONTACT ===================== -->
+<footer id="contact">
+  <div class="wrap">
+    <p class="eyebrow">Get in touch</p>
+    <h2>Let's talk about what you're building.</h2>
+    <p>[Placeholder — a short line inviting people to reach out about opportunities or collaboration.]</p>
+    <div class="contact-list">
+      <a href="mailto:your.email@example.com">Email — [your.email@example.com]</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      <a href="assets/resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> [Your Name]</span>
+      <span>Built for GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Reveal project sheets as they scroll into view
+  const sheets = document.querySelectorAll('.sheet');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReduced) {
+    sheets.forEach(s => s.classList.add('in-view'));
+  } else if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    sheets.forEach(s => io.observe(s));
+  } else {
+    sheets.forEach(s => s.classList.add('in-view'));
+  }
+</script>
+
+</body>
+</html>
