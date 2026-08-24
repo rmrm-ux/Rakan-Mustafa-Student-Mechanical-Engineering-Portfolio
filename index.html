@@ -352,6 +352,9 @@
   @media (max-width: 640px){
     .media-gallery{ grid-template-columns: 1fr; }
   }
+  /* full-width row inside a media-gallery — e.g. a single wide image or GIF
+     sitting beneath two side-by-side images (upside-down triad layout) */
+  .media-gallery figure.full-span{ grid-column: 1 / -1; }
 
   /* ---- outline "view code" style link inside a sheet body ---- */
   .code-link{
@@ -449,6 +452,17 @@
     color: var(--ink-soft);
     text-align: center;
     margin-bottom: 22px;
+  }
+  .about-copy .avatar-row{
+    display: flex;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .about-copy .avatar-row .avatar-placeholder{ margin-bottom: 0; }
+  .about-copy .avatar-row img.avatar-placeholder{
+    background: #FFFFFF;
+    object-fit: contain;
+    padding: 10px;
   }
 
   table.bom{
@@ -643,17 +657,20 @@
             <span>Dual-Disc Cycloidal Drive — Mechanical Design &amp; Kinematic Validation</span>
           </div>
 
-          <!--
-            No media uploaded yet for this project — see instructions on Project 1
-            for how to swap this placeholder for real images once the physical
-            build / motion-study capture is ready.
-          -->
-          <div class="media-placeholder">
-            <div class="ph-content">
-              <svg width="34" height="34" viewBox="0 0 34 34" fill="none"><rect x="1" y="1" width="32" height="32" rx="1" stroke="#8A8D84" stroke-width="1"/><circle cx="11" cy="12" r="3" stroke="#8A8D84" stroke-width="1"/><path d="M2 26L12 17L19 22L24 16L33 24" stroke="#8A8D84" stroke-width="1"/></svg>
-              <div class="ph-label">Image / Video Placeholder</div>
-              <div class="ph-sub">Assembly render, motion study, and print photos to follow</div>
-            </div>
+          <!-- Two assembly renders on top, animated motion study spanning full width below -->
+          <div class="media-gallery">
+            <figure>
+              <img src="assets/cycloidal/cycloidal-3d-assembly.png" alt="3D CAD render of the assembled dual-disc cycloidal drive">
+              <figcaption>3D Assembly — Isometric View</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/cycloidal/cycloidal-exploded-view.png" alt="Exploded view of the cycloidal drive showing discs, pins, bearings, and housing">
+              <figcaption>Exploded View — Full Assembly</figcaption>
+            </figure>
+            <figure class="full-span">
+              <img src="assets/cycloidal/cycloidal-animation.gif" alt="Animated motion study of the cycloidal drive showing the 10:1 reduction in motion">
+              <figcaption>Motion Study — Animated 10:1 Reduction</figcaption>
+            </figure>
           </div>
 
           <div class="sheet-body">
@@ -734,13 +751,16 @@
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Background</p>
-        <h2>About</h2>
+        <h2>About Me</h2>
         <div class="rule"></div>
       </div>
 
       <div class="about-grid">
         <div class="about-copy">
-          <div class="avatar-placeholder">Photo<br>Placeholder</div>
+          <div class="avatar-row">
+            <img src="assets/umd-logo.png" alt="University of Maryland logo" class="avatar-placeholder">
+            <img src="assets/terps-racing-logo.png" alt="UMD Terps Racing (Formula SAE) logo" class="avatar-placeholder">
+          </div>
           <p>[Placeholder bio — a few sentences about your engineering background, what you're studying or where you work, and what kind of problems you enjoy solving. Mention your degree, school/employer, and graduation year if relevant.]</p>
           <p>[Optional second paragraph — interests, notable coursework, or what you're looking for next, e.g. internships or full-time roles.]</p>
         </div>
@@ -767,9 +787,7 @@
 <!-- ===================== FOOTER / CONTACT ===================== -->
 <footer id="contact">
   <div class="wrap">
-    <p class="eyebrow">Get in touch</p>
-    <h2>Let's talk about what you're building.</h2>
-    <p>[Placeholder — a short line inviting people to reach out about opportunities or collaboration.]</p>
+    <h2>ALL LINKS</h2>
     <div class="contact-list">
       <a href="mailto:your.email@example.com">Email — [your.email@example.com]</a>
       <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a>
