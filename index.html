@@ -713,31 +713,72 @@
         <article class="sheet">
           <div class="sheet-header">
             <span class="dwg-no">DWG NO. 03</span>
-            <span>Front Splitter Aerodynamic Simulation</span>
+            <span>Front Splitter Aerodynamic Analysis (CFD)</span>
           </div>
 
-          <!--
-            REPLACE THIS DIV to add real media (see instructions on Project 1)
-          -->
-          <div class="media-placeholder">
-            <div class="ph-content">
-              <svg width="34" height="34" viewBox="0 0 34 34" fill="none"><rect x="1" y="1" width="32" height="32" rx="1" stroke="#8A8D84" stroke-width="1"/><circle cx="11" cy="12" r="3" stroke="#8A8D84" stroke-width="1"/><path d="M2 26L12 17L19 22L24 16L33 24" stroke="#8A8D84" stroke-width="1"/></svg>
-              <div class="ph-label">Image / Video Placeholder</div>
-              <div class="ph-sub">Recommended 1600 × 900px — replace this div, see comment in source</div>
-            </div>
+          <!-- Two flow-trajectory GIFs on top, convergence goal plots spanning full width below -->
+          <div class="media-gallery">
+            <figure>
+              <img src="assets/aero/aero-flow-side-view.gif" alt="Side view of flow trajectory streamlines deflecting around the front splitter's leading edge">
+              <figcaption>Flow Trajectories — Side View (20 m/s)</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/aero/aero-flow-isometric-view.gif" alt="Isometric view of flow trajectory streamlines around the front splitter and undertray">
+              <figcaption>Flow Trajectories — Isometric View</figcaption>
+            </figure>
+            <figure class="full-span">
+              <img src="assets/aero/aero-convergence-goals.png" alt="Goal convergence plots for maximum velocity and force in Y and Z, flattening by roughly iteration 20-30 of 58">
+              <figcaption>Convergence History — Velocity &amp; Force Goals (~58 Iterations)</figcaption>
+            </figure>
           </div>
 
           <div class="sheet-body">
-            <h3>[Project 3 Name]</h3>
-            <p class="summary">[One-line summary of what this project is and its outcome.]</p>
-            <p class="description">[Placeholder paragraph — describe the problem you set out to solve, your design approach, and how you validated it. Mention key decisions, constraints, and what you'd improve next time. Replace with your own write-up.]</p>
+            <h3>Front Splitter Aerodynamic Analysis (CFD)</h3>
+            <p class="summary">Taught myself CFD from scratch in SolidWorks Flow Simulation by running a full external-flow wind tunnel test on a front splitter I'd modeled freshman year — catching and fixing a fluid-density bug along the way, and validating the result to convergence before trusting any of the numbers.</p>
+
+            <p class="description">I originally modeled this front splitter during winter break of my freshman year, just as a design exercise. Coming back to it now, I wanted to actually simulate how it performs — and use it as a way to teach myself computational fluid dynamics from scratch in SolidWorks Flow Simulation, a tool I'd never touched before.</p>
+            <p class="description">I set up an external flow wind-tunnel test around the splitter at 20 m/s (about 45 mph), targeting two outcomes: a surface pressure distribution across the part, and a set of flow trajectory streamlines showing how air deflects around the leading edge and underneath the undertray.</p>
+
+            <h3>Test Setup</h3>
+            <ul style="margin:0 0 22px; padding-left:20px; color:var(--ink-soft);">
+              <li style="margin-bottom:6px;"><strong>Analysis type</strong> — External flow, steady-state</li>
+              <li style="margin-bottom:6px;"><strong>Fluid</strong> — Air (default SolidWorks properties, ~1.2 kg/m³)</li>
+              <li style="margin-bottom:6px;"><strong>Freestream velocity</strong> — 20 m/s (~45 mph)</li>
+              <li style="margin-bottom:6px;"><strong>Ambient conditions</strong> — 101,325 Pa, 293.2 K</li>
+              <li><strong>Flow regime</strong> — Laminar and turbulent (SolidWorks default)</li>
+            </ul>
+
+            <h3>Debugging &amp; Troubleshooting</h3>
+            <p class="description">Since this was fully self-taught, most of the real work was figuring out why things were wrong before I could trust anything the solver told me:</p>
+            <p class="description"><strong>Diagnosing a fluid setup error</strong> — my first run came back with pressure values off by roughly three orders of magnitude. Tracing it back, I found the project's default fluid was set to water instead of air — a mistake that became obvious once I ran the numbers myself: dynamic pressure at 20 m/s should land around 245 Pa, not the tens of thousands I was seeing. That sanity check is what caught it, not the solver flagging anything.</p>
+            <p class="description"><strong>Working through boundary conditions</strong> — I had to learn the difference between internal and external flow analysis types, why boundary conditions apply to the domain rather than the model surface in external flow, and how to correctly define global velocity through Initial and Ambient Conditions.</p>
+            <p class="description"><strong>Catching CAD/mesh quality issues</strong> — a geometry check turned up sliver faces, short edges, and knife vertices left over from the import process, which were locally corrupting the pressure solution near the leading edge. Rather than pretending they weren't there, I worked around them — manually excluding the flagged faces from the surface pressure plot instead of trusting the raw output.</p>
+            <p class="description"><strong>Verifying convergence</strong> — I tracked Maximum Velocity and Force (Y and Z) goals across iterations to confirm the solution had actually stabilized before treating any results as valid. All three goals flattened out by around iteration 20–30 of the ~58 total, which is what let me trust the final numbers instead of just assuming a completed run meant a correct one.</p>
+
+            <h3>Results</h3>
+            <p class="description">By the end of the run, the goal plots showed clean, flat convergence:</p>
+            <ul style="margin:0 0 22px; padding-left:20px; color:var(--ink-soft);">
+              <li style="margin-bottom:6px;"><strong>Maximum velocity</strong> converged to ~23–24 m/s — consistent with freestream plus local acceleration around the part</li>
+              <li style="margin-bottom:6px;"><strong>Force (Y)</strong> converged to roughly 250–300 N</li>
+              <li><strong>Force (Z)</strong> converged to roughly -1,000 N, in the direction consistent with downforce for this coordinate setup</li>
+            </ul>
+            <p class="description">Qualitatively, the flow trajectories show visible curvature and upwash near the splitter's leading edge — air deflecting up and over, exactly what you'd expect from a splitter shape. The surface pressure plot backs that up: elevated stagnation pressure at the leading edge, and reduced pressure along the underside, consistent with downforce-generating behavior.</p>
+
+            <h3>Caveats</h3>
+            <p class="description">This was intentionally a simplified, illustrative aero study — not a production CFD workflow. I was teaching myself the tool and validating a design concept, not certifying a part for use.</p>
+            <ul style="margin:0 0 22px; padding-left:20px; color:var(--ink-soft);">
+              <li style="margin-bottom:6px;">The imported CAD had minor geometry defects (sliver faces, short edges, knife vertices from the import) that I identified through a geometry analysis. I made a deliberate choice not to fully repair them, and instead worked around them — manually excluding the flagged faces from the surface plot — rather than pretending they weren't there.</li>
+              <li>Because goals integrate pressure over the entire body surface (including those flagged faces), the Force Y/Z numbers likely carry more error than the surface pressure plot does. I'd treat them as order-of-magnitude, not precise — the trend and general magnitude are physically reasonable, but I wouldn't quote them to two significant figures without cleaning up the geometry first.</li>
+            </ul>
+            <p class="description">This project was less about the specific part and more about proving to myself I could take a CFD tool I'd never used, break it, figure out why it broke, and still land on a physically sound, converged result on my own.</p>
+
             <ul class="specs">
-              <li><span>Role</span>[Placeholder]</li>
-              <li><span>Tools</span>[Placeholder — e.g. CATIA, LabVIEW]</li>
-              <li><span>Timeline</span>[Placeholder]</li>
+              <li><span>Role</span>Aerodynamics / CFD (Independent Project)</li>
+              <li><span>Tools</span>SolidWorks, SolidWorks Flow Simulation</li>
+              <li><span>Timeline</span>2026</li>
             </ul>
             <div class="tags">
-              <span>[Tag]</span><span>[Tag]</span><span>[Tag]</span>
+              <span>CFD</span><span>External Flow Simulation</span><span>SolidWorks Flow Simulation</span><span>Aerodynamics</span>
             </div>
           </div>
         </article>
